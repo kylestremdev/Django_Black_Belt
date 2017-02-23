@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Destination</title>
+    <style media="screen">
+    #header{
+      position: relative;
+      height: 30px;
+    }
+    #header a{
+      display: inline-block;
+      vertical-align: center;
+      margin: 10px;
+      position: absolute;
+      right: 20px;
+    }
+    #header a:first-of-type{
+      right: 80px;
+    }
+
+    ul{
+      list-style: none;
+    }
+
+    .error{
+      color: red;
+      margin: 0;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <a href="{% url 'travels:index' %}">Home</a>
+      <a href="{% url 'users:logout' %}">Logout</a>
+    </div>
+    {% if messages %}
+      {% for message in messages %}
+      <p class="error">{{message}}</p>
+      {% endfor %}
+    {% endif %}
+
+    <h3>{{trip.destination}}</h3>
+    <ul>
+      <li><label>Planned By:</label> {{trip.planned_by.name}}</li>
+      <li><label>Description:</label> {{trip.description}}</li>
+      <li><label>Travel Date From:</label> {{trip.start_date}}</li>
+      <li><label>Travel Date To:</label> {{trip.end_date}}</li>
+    </ul>
+
+    <h4>Other users' joining the trip:</h4>
+    {% if trip.joined_users %}
+    <ul>
+      {% for user in trip.joined_users.all %}
+      <li>{{user.name}}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>

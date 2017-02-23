@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add Trip</title>
+    <style media="screen">
+      .error{
+        margin: 0;
+        color: red;
+      }
+
+      #header{
+        height: 30px;
+        position: relative;
+      }
+      #header a{
+        vertical-align: center;
+        display: inline-block;
+        margin: 10px;
+        position: absolute;
+        right: 20px;
+      }
+      #header a:first-of-type{
+        right: 80px;
+      }
+
+      label{
+        display: inline-block;
+        width: 100px;
+      }
+
+      .date{
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <a href="{% url 'travels:index' %}">Home</a>
+      <a href="{% url 'users:logout' %}">Logout</a>
+    </div>
+    {% if messages %}
+      {% for message in messages %}
+        <p class="error">{{message}}</p>
+      {% endfor %}
+    {% endif %}
+    <h3>Add a Trip</h3>
+    <form class="" action="{% url 'travels:create_trip' %}" method="post">
+      {% csrf_token %}
+      <p><label for="destination">Destination:</label><input type="text" name="destination" value=""></p>
+      <p><label for="description">Description:</label><input type="text" name="description" value=""></p>
+      <p><label class="date" for="start_date">Travel Date From:</label><input type="date" name="start_date" value=""></p>
+      <p><label class="date" for="end_date">Travel Date To:</label><input type="date" name="end_date" value=""></p>
+      <input type="hidden" name="user_id" value="{{request.session.user.id}}">
+      <input type="submit" name="" value="Add">
+    </form>
+  </body>
+</html>
